@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+        <id>SecureMyAdmin</id>
+        <version>1.0.0</version>
+        <vqmver>2.4.1</vqmver>
+        <author>Razorin Works</author>
+		
+
+
+	<file name="admin/controller/common/home.php">
+		
+
+		<operation error="log">
+			<search position="before">
+				<![CDATA[public function permission() {]]>
+			</search>
+			
+			<add>
+				<![CDATA[
+					public function secureURL($getRequestVar) {
+
+		$valid = FALSE;
+
+		// check if the module has been enabled
+		if ( $this->config->get('secure_status') &&  $this->config->get('secure_status') == 1 ) {
+		
+		// get the secure key from the database
+		$db_skey    =  $this->config->get('secure_key');
+		
+		
+		// get the secure value from the database
+		$db_sval    =  $this->config->get('secure_value');
+		
+		// Get the session securekey
+		$session_skey = "" ; 
+		$session_sval = "" ; 
+		If( isset($this->session->data[$db_skey]) ) {
+
+			$k = explode("_",$this->session->data[$db_skey]);
+		
+			$k[0];
+			//$session_skey = $this->session->data[$db_skey] ; 
+			$session_skey = $k[0];
+			$session_sval = $k[1];
+		
+		}
+
+
+		// Get the session secure value
+		
+		//If( isset($this->session->data[$db_sval]) ) { $session_sval = $this->session->data[$db_sval] ; }
+
+ 		if(!empty($getRequestVar)){
+		
+			if(isset($getRequestVar[$db_skey] )){
+				$getlink = array( $db_skey => $getRequestVar[$db_skey] );
+
+		}}
+		
+		// Get the URL params thru get request
+		$url_skey = "" ;
+ 		$url_sval = "" ;
+		
+		if(isset($getlink) ){
+			foreach ( $getlink as $key =>$value ){
+				$url_skey =$key;
+				$url_sval = $value; 
+			}
+		}
+		
+				
+		if($db_skey && $db_sval && $url_skey && $url_sval ){
+			
+			if ( $db_skey === $url_skey && $db_sval === $url_sval ) {
+				
+				// if everything is correct , set the session
+				$this->session->data[$db_skey] = $db_skey."_".$db_sval  ;
+				//$this->session->data[$db_sval] = $db_sval  ;
+				$valid = TRUE;	
+			}
+
+		}
+
+		if ( $session_skey && $session_sval && $session_skey === $db_skey  && $session_sval === $db_sval ) {
+			 
+				$valid = TRUE;				
+		}
+			
+	
+		
+		if (!$valid ) {
+     	   $loc = 'Location:'.	$this->config->get('config_url');
+		   header($loc);
+			exit;
+		
+		}
+
+		}
+	}	
+				]]>
+			</add>	
+		</operation>
+<operation error="log">
+			<search position="after">
+				<![CDATA[public function login() {]]>
+			</search>
+			
+			<add>
+	$this->secureURL($this->request->get);
+</add>
+</operation>	
+   </file>
+
+		
+</modification>
