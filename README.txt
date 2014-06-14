@@ -1,10 +1,10 @@
 =========================================================================================
-SECURE MY ADMIN v1.0.1
+SECURE MY ADMIN 
 Author:Razorin Works 
 Email :razorin.works@gmail.com
+Website:https://code.google.com/p/secure-my-admin/
 
-
-Thank you for purchasing this extension and please dont forget to rate it ( Click Stars )
+Thank you for supporting this extension and please dont forget to rate it ( Click 5 Stars )
 
 
 This extension adds additional keys and value to the administrator login to prevent
@@ -77,9 +77,3 @@ Query for disabling the internal status of the secureadmin module.
 
 For support , Please contact razorin.works@gmail.com
 
-
-=========================================================================================
-Changelog
-=========================================================================================
-1.0.1
-Removal of the "test" comment ;

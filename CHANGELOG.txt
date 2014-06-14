@@ -1,0 +1,28 @@
+=========================================================================================
+SECURE MY ADMIN 
+Author:Razorin Works 
+Email :razorin.works@gmail.com
+Website:https://code.google.com/p/secure-my-admin/w/edit/SecureMyAdmin
+
+
+=========================================================================================
+Changelog
+=========================================================================================
+v1.0.1
+Removed the "Test" comment. Thanks @AndroidA for pointing out .
+Updated README with more instructions and How To's.
+
+v1.0.2
+Added the modify and access permissions steps into README.txt @ credits to sfkhan for reminding . 
+Added an SQL query in the README for guiding on how to disable the module internally .
+
+v1.0.3
+Tidied and removed redundant codes.
+SecureMyAdmin now redirects to 404 page not found instead of default index page. Thx @Nikita_S . 
+Thx @heldersepu 
+Added generate buttons buttons to both secure key and value for convenience .
+Added the SecureURL link which refreshes upon changing of the key and value , convenience for users to copy and store it.
+Added a Red reminder in the bottom section.
+Added a confirm function to the save button for double confirmation to prevent accidental saving or clicks.
+Added URL linking to the google code website for secure my admin.
+Added a Logo for the module.
