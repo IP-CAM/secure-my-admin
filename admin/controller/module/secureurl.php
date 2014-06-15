@@ -14,8 +14,6 @@ class ControllerModuleSecureurl extends Controller {
 			
 			$this->model_setting_setting->editSetting('secureurl', $this->request->post);		
 			
-			//$this->cache->delete('product');
-			
 			$this->session->data['success'] = $this->language->get('text_success');
 						
 			//$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -78,16 +76,15 @@ class ControllerModuleSecureurl extends Controller {
 		
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		//$this->data['modules'] = array();
+		
 		$this->data['modules'] = $this->model_setting_setting->getSetting('secureurl');
 		$t = $this->model_setting_setting->getSetting('secureurl');
-	//var_dump($t);
+	
 		if (isset($this->request->post['secureurl_module'])) {
-			$this->data['modules'] = $t ; //$this->request->post['secureurl'];
+			$this->data['modules'] = $t ; 
 		} elseif ($this->config->get('secureurl_module')) { 
 			$this->data['modules'] = $t;
 		}	
-
 			
 				
 		$this->load->model('design/layout');

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
         <id>SecureMyAdmin</id>
-        <version>1.0.0</version>
+        <version>1.0.3</version>
         <vqmver>2.4.1</vqmver>
         <author>Razorin Works</author>
 		
@@ -89,7 +89,7 @@
 	
 		
 		if (!$valid ) {
-     	   $loc = 'Location:'.	$this->config->get('config_url');
+     	   $loc = 'Location:'.$this->config->get('config_url').'?route=error/not_found';
 		   header($loc);
 			exit;
 		
@@ -101,15 +101,33 @@
 			</add>	
 		</operation>
 <operation error="log">
-			<search position="after">
-				<![CDATA[public function login() {]]>
+			<search position="before" index="1">
+				<![CDATA[if (isset($this->request->get['route'])) {]]>
 			</search>
 			
 			<add>
-	$this->secureURL($this->request->get);
+	<![CDATA[$this->secureURL($this->request->get);]]>
 </add>
 </operation>	
    </file>
 
+	<file name="admin/controller/common/logout.php">
+		<search position="after">
+				<![CDATA[unset($this->session->data['token']);]]>
+			</search>
+			
+			<add>
+		<![CDATA[if ( $this->config->get('secure_status') &&  $this->config->get('secure_status') == 1 ) {
+			// get the secure key from the database
+			$db_skey    =  $this->config->get('secure_key');
+			// get the secure value from the database
+			$db_sval    =  $this->config->get('secure_value');
+			unset($this->session->data[$db_skey]);
+			unset($this->session->data[$db_sval]);
+		}
+]]>
+</add>
+	
+	</file>
 		
 </modification>
