@@ -27,7 +27,7 @@ INSTRUCTIONS for installation
 
 3) Install secureMyAdmin in the modules page.
 
-4) Run phpMyadmin (or any other program to insert in your database the following query) and insert:
+4) Run phpMyadmin (or any other program to insert in your database queries) and insert:
 
 CREATE TABLE IF NOT EXISTS `admin_ip_whitelist` (
   `admin_ip_whitelist_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,7 +48,7 @@ How to install the module
 @thumbs up for sfkhan !
 4) Go to System > Users > User Groups > Top Administrator ( Or any groups you would like to have access ) and click [Edit]
 
-5) Find and Tick module/secureurl and tool/ip_admin for both Access and modify permission.
+5) Find and Tick module/secureurl for both Access and modify permission.
 
 6)Click on the [Edit] link and you will be redirected to the plugin page.
 
