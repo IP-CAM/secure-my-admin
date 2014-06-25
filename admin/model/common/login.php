@@ -11,16 +11,23 @@ class ModelCommonLogin extends Model {
 			return $ipaddress;
 		}
 
-		$ip = check_ip();
-		$create_table = "CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "admin_ip_whitelist` ( " .
+		$sql_query = "CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "admin_ip_whitelist` ( " .
 			"  `admin_ip_whitelist_id` int(11) NOT NULL AUTO_INCREMENT, " .
 			"  `ip` varchar(15) COLLATE utf8_bin NOT NULL, " .
 			"  PRIMARY KEY (`admin_ip_whitelist_id`), " .
 			"  KEY `ip` (`ip`) " .
 			") ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ";
-		$this->db->query($create_table);
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "admin_ip_whitelist` WHERE ip = '" . $ip . "'");
-		return $query->row['total'];
+		$this->db->query($sql_query);
+
+		$sql_query = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "admin_ip_whitelist` "
+		$query = $this->db->query($sql_query);
+		if ((int)$query->row['total'] > 0) {
+			$ip = check_ip();
+			$query = $this->db->query($sql_query . " WHERE ip = '" . $ip . "'");
+			return (int)$query->row['total'];
+		} else {
+			return 1;
+		}
 	}
 }
 ?>
