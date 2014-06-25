@@ -95,40 +95,20 @@ ChangeUrl();
 	  <h3>Your Secure URL Link</h3>	
 		<h3 id="finalURL" style="color: blue;"></h3>
 		<br/>
-		<h3  style="color: Red;">**Please Record down your secure URL Link before saving.</h3>
+		<h3 id="warning_msg"  style="color: Red; display:None;">**Please Record down your secure URL Link before saving.</h3>
       </form>
-	  <div style="text-align:center; margin-top:50px;"><h5>version 1.0.3</h5></div>
-    </div>
-	
-  </div>
-  <h4>For assistance or bug issues , feel free to report in our google code page - <a href="https://code.google.com/p/secure-my-admin/" target="_blank">https://code.google.com/p/secure-my-admin/</a> </h4>
-
-<script type="text/javascript">
-
-$(function(){
-	$('#submit').click(function(){
-		if(confirm("Have you saved the secure url yet?")) {
-   		  $('#form').submit();
-  		}
-	});
-});
+	  <br><br>
 
 
-$(document).ready(function() { ChangeUrl() });
-
-</script>
-<?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
-  <?php } ?>
-  <div class="box">
+  <div class="box" style="width: 90%; margin: 0 auto;">
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title_ip; ?></h1>
-      <div class="buttons"><a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+      <div class="buttons">
+		<a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a>
+		<a onclick="$('form').submit();" class="button" style="background: #AF0303;"><?php echo $button_delete; ?></a>
+	  </div>
     </div>
-    <div class="content">
+    <div class="content" style="min-height: 100px;">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="list">
           <thead>
@@ -168,5 +148,31 @@ $(document).ready(function() { ChangeUrl() });
       <div class="pagination"><?php echo $pagination; ?></div>
     </div>
   </div>
+	  
+	  <div style="text-align:center; margin-top:50px;"><h5>version 1.0.5</h5></div>
+    </div>
+	
+  </div>
+  <h4>For assistance or bug issues , feel free to report in our google code page - <a href="https://code.google.com/p/secure-my-admin/" target="_blank">https://code.google.com/p/secure-my-admin/</a> </h4>
+
+<script type="text/javascript">
+
+$(function(){
+	$('#submit').click(function(){
+		if(confirm("Have you saved the secure url yet?")) {
+   		  $('#form').submit();
+  		}
+	});
+	$('select').change(function(){
+		$('#warning_msg').show();
+	});
+});
+
+
+$(document).ready(function() { ChangeUrl() });
+
+</script>
+
+  
 </div>
 <?php echo $footer; ?>

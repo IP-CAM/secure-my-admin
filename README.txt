@@ -4,11 +4,11 @@ Author:Razorin Works
 Email :razorin.works@gmail.com
 Website:https://code.google.com/p/secure-my-admin/
 
-Thank you for supporting this extension and please dont forget to rate it ( Click 5 Stars )
+Thank you for supporting this extension and please don't forget to rate it ( Click 5 Stars )
 
 
 This extension adds additional keys and value to the administrator login to prevent
-people from accessing and hacking . 
+people from accessing and hacking. 
 
 The implementation of the plugin "SecureMyAdmin" does not prevent 100% penetration of
 the opencart system. 
@@ -23,18 +23,9 @@ INSTRUCTIONS for installation
 ===============================
 1) You would need a minimum of vqmod  2.2 installed in your opencart system
 
-2) Copy all the files into the OC directory . 
+2) Copy all the files into the OC directory. 
 
 3) Install secureMyAdmin in the modules page.
-
-4) Run phpMyadmin (or any other program to insert in your database queries) and insert:
-
-CREATE TABLE IF NOT EXISTS `admin_ip_whitelist` (
-  `admin_ip_whitelist_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(15) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`admin_ip_whitelist_id`),
-  KEY `ip` (`ip`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1
 
 
 How to install the module
@@ -43,7 +34,7 @@ How to install the module
 
 2) After that access the Extensions > Modules > Secure My Admin - Secure URL for Administrator Backend 
 
-3) Click on the [Install] link , Upon successful installation you will see [Edit][Uninstall].
+3) Click on the [Install] link, Upon successful installation you will see [Edit][Uninstall].
 
 @thumbs up for sfkhan !
 4) Go to System > Users > User Groups > Top Administrator ( Or any groups you would like to have access ) and click [Edit]
@@ -52,15 +43,15 @@ How to install the module
 
 6)Click on the [Edit] link and you will be redirected to the plugin page.
 
-7) You will see status , Secure Key and Secure Value.
+7) You will see status, Secure Key and Secure Value.
 
 8) Select the status to enabled and key in your secure key and secure value.
 
-**Please note that # and Symbols cant be used in your key and value . Only alphanumeric is allowed.
+**Please note that # and Symbols can NOT be used in your key and value. Only alphanumeric is allowed.
 
-9) Upon entering both key and value , click on the save button.
+9) Upon entering both key and value, click on the save button.
 
-**Please remember the key and value before saving , without them you cant access your url panel.
+**Please remember the key and value before saving, without them you can NOT access your url panel.
 
 
 How to access the admin URL after setting the module
@@ -73,9 +64,9 @@ www.yourstorename.com/admin/?securekey=securevalue
 
 How to disable the admin URL after setting the module
 ======================================================
-To disable the component , just rename the vqmod file from secureMyAdmin.xml to secureMyAdmin._xml
+To disable the component, just rename the vqmod file from secureMyAdmin.xml to secureMyAdmin._xml
 
-By doing this , you are temporarily uninstalling the plugin. To change the key and value , you would need
+By doing this , you are temporarily uninstalling the plugin. To change the key and value, you would need
 to access your database and retrieve the keys.
 
 Query for disabling the internal status of the secureadmin module.
@@ -83,5 +74,5 @@ Query for disabling the internal status of the secureadmin module.
 "UPDATE `DB_PREFIX_setting` SET `value` = '0' WHERE `group` = 'secureurl' and `key` = 'secure_status' ; "
 
 
-For support , Please contact razorin.works@gmail.com
+For support, Please contact razorin.works@gmail.com
 
