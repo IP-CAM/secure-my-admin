@@ -56,27 +56,30 @@ ChangeUrl();
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table id="module" class="list">
          <h3>Administrator Key</h3>
-            <tr>
-          
-              <td class="left">Status</td>
-		<td>
-		 <select name="secure_status">
-                  <?php if ($modules['secure_status']) { ?>
+            <tr>          
+				<td class="left">Status</td>
+				<td>
+				<select name="secure_status">
+                  <?php $secure_status = false;
+					if (isset($modules['secure_status'])) { 
+						$secure_status = $modules['secure_status'];
+					}
+				  ?>
+				  <?php if ($secure_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
-                </select></td>
+                </select>
+				</td>
 	
-              </tr>
-           <tr>
+            </tr>
+			<tr>
               <td class="left">Secure Key</td><td>
                <input type="text" name="secure_key" id="secure_key" onchange="ChangeUrl();" value="<?php  echo $secKey;   ?>"  />
-		<button type="button" style="margin-left:10px;" onclick="GenerateKey()">Generate Me!</button></td>
-		
-		
+				<button type="button" style="margin-left:10px;" onclick="GenerateKey()">Generate Me!</button></td>
               </tr>
            <tr>
               <td class="left">Secure Value</td><td>
