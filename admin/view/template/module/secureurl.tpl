@@ -1,6 +1,5 @@
 <?php echo $header;
-
-$secKey = ((isset($modules['secure_key'])) ? $modules['secure_key'] : '' );
+$secKey = ((isset($modules['secure_key'])) ? $modules['secure_key'] : 'secureKey' );
 $secVal = ((isset($modules['secure_value'])) ? $modules['secure_value'] : '' );
 ?>
 
@@ -14,19 +13,16 @@ function randomString() {
 		var rnum = Math.floor(Math.random() * chars.length);
 		randomstring += chars.substring(rnum,rnum+1);
 	}
-
-	return randomstring;
-	
+	return randomstring;	
 }
 
-
 function ChangeUrl() {
+if ($('[name="secure_value"]').val() == "") {GenerateVal()}
 var url = document.URL.substring(0, document.URL.indexOf("index"))
 url += "?" + $('[name="secure_key"]').val()
 url += "=" + $('[name="secure_value"]').val()
 $('#finalURL').html(url);
 }
-
 
 function GenerateKey(){
 document.getElementById("secure_key").value=randomString();
@@ -156,7 +152,6 @@ ChangeUrl();
   <h4>For assistance or bug issues , feel free to report in our google code page - <a href="https://code.google.com/p/secure-my-admin/" target="_blank">https://code.google.com/p/secure-my-admin/</a> </h4>
 
 <script type="text/javascript">
-
 $(function(){
 	$('#submit').click(function(){
 		if(confirm("Have you saved the secure url yet?")) {
@@ -168,9 +163,7 @@ $(function(){
 	});
 });
 
-
 $(document).ready(function() { ChangeUrl() });
-
 </script>
 
   
