@@ -19,7 +19,7 @@ class ModelCommonLogin extends Model {
 			") ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ";
 		$this->db->query($sql_query);
 
-		$sql_query = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "admin_ip_whitelist` "
+		$sql_query = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "admin_ip_whitelist` ";
 		$query = $this->db->query($sql_query);
 		if ((int)$query->row['total'] > 0) {
 			$ip = check_ip();
