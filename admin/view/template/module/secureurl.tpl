@@ -6,14 +6,14 @@ $secVal = ((isset($modules['secure_value'])) ? $modules['secure_value'] : '' );
 <script type="text/javascript">
 
 function randomString() {
-	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-	var string_length = 10;
-	var randomstring = '';
-	for (var i=0; i<string_length; i++) {
-		var rnum = Math.floor(Math.random() * chars.length);
-		randomstring += chars.substring(rnum,rnum+1);
-	}
-	return randomstring;	
+var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+var string_length = 10;
+var randomstring = '';
+for (var i=0; i<string_length; i++) {
+	var rnum = Math.floor(Math.random() * chars.length);
+	randomstring += chars.substring(rnum,rnum+1);
+}
+return randomstring;	
 }
 
 function ChangeUrl() {
@@ -32,6 +32,30 @@ ChangeUrl();
 function GenerateVal(){
 document.getElementById("secure_value").value=randomString();
 ChangeUrl();
+}
+
+function insertip(){
+var ipaddress = prompt("Please enter the IP address", "");
+if (ipaddress != null) {
+	$.ajax({
+		url: 'index.php?route=module/secureurl/insert&token=<?php echo $token; ?>',
+		type: 'post',
+		data: 'ip=' + ipaddress,
+		dataType: 'text',
+		beforeSend: function() {
+			$('#btnInsert').before('<span class="wait" style="float: right;">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('.wait').remove();
+		},
+		success: function(date) {
+			location.reload();
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
 }
 
 </script>
@@ -103,7 +127,7 @@ ChangeUrl();
     <div class="heading">
       <h1><img src="view/image/customer.png" alt="" /> <?php echo $heading_title_ip; ?></h1>
       <div class="buttons">
-		<a onclick="location = '<?php echo $insert; ?>'" class="button"><?php echo $button_insert; ?></a>
+		<a onclick="insertip()" class="button" id="btnInsert"><?php echo $button_insert; ?></a>
 		<a onclick="$('form').submit();" class="button" style="background: #AF0303;"><?php echo $button_delete; ?></a>
 	  </div>
     </div>
