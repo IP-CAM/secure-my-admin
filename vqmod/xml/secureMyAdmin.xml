@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
-        <id>SecureMyAdmin</id>
-        <version>1.0.3</version>
-        <vqmver>2.4.1</vqmver>
-        <author>Razorin Works</author>
-		
+	<id>SecureMyAdmin</id>
+	<version>1.0.3</version>
+	<vqmver>2.4.1</vqmver>
+	<author>Razorin Works</author>
+
 	<file name="admin/view/template/common/login.tpl">
 	<operation error="log">
-		<search position="after">
-			<![CDATA[<div id="content">]]>
-		</search>
-		<add>
-			<![CDATA[<?php if ($checked_ip == 1) { ?>]]>
-		</add>
+		<search position="after"><![CDATA[<div id="content">]]></search>
+		<add><![CDATA[<?php if ($checked_ip == 1) { ?>]]></add>
 	</operation>
 	<operation error="log">
 		<search position="after">
@@ -24,7 +20,6 @@
 				  <table border="0">
 					<tr align="center">
 					<td><img src="view/image/access_denied.png" alt="Access denied"></td>
-					<td style="text-align: center;"><?php echo $message; ?></td>
 					</tr>
 				  </table>
 				</div>]]>
@@ -32,13 +27,8 @@
 	</operation>
 
 	<operation error="log">
-		<search position="after">
-			<![CDATA[<?php echo $footer; ?>]]>
-		</search>
-		<add>
-			<![CDATA[<?php } ?>]]>
-		</add>
-
+		<search position="after"><![CDATA[<?php echo $footer; ?>]]></search>
+		<add><![CDATA[<?php } ?>]]></add>
 	</operation>
 
 	</file>
@@ -52,37 +42,16 @@
 			<![CDATA[$this->load->model('common/login');
 				 $this->data['checked_ip'] = $this->model_common_login->getTotalIpChecks();]]>
 		</add>
-	</operation>	
-	
-	<operation error="log">
-		<search position="after">
-			<![CDATA[$this->data['text_login'] = $this->language->get('text_login');]]>
-		</search>
-		<add>
-			<![CDATA[$this->data['message'] = $this->language->get('message');]]>
-		</add>
-	</operation>
-	
-	</file>
-
-	<file name="/language/english/common/login.php">
-	<operation error="log">
-		<search position="after">
-			<![CDATA[$_['text_login']     = 'Please enter your login details.';]]>
-		</search>
-		<add>
-			<![CDATA[$_['message']        = 'Sorry you are not authorized to access this page!! Please contact system administrator.';]]>
-		</add>
 	</operation>
 	</file>
 
 	<file name="admin/controller/common/home.php">
-		
+
 		<operation error="log">
 			<search position="before">
 				<![CDATA[public function permission() {]]>
 			</search>
-			
+
 			<add>
 				<![CDATA[
 					public function secureURL($getRequestVar) {
@@ -91,99 +60,76 @@
 
 		// check if the module has been enabled
 		if ( $this->config->get('secure_status') &&  $this->config->get('secure_status') == 1 ) {
-		
-		// get the secure key from the database
-		$db_skey    =  $this->config->get('secure_key');
-		
-		
-		// get the secure value from the database
-		$db_sval    =  $this->config->get('secure_value');
-		
-		// Get the session securekey
-		$session_skey = "" ; 
-		$session_sval = "" ; 
-		If( isset($this->session->data[$db_skey]) ) {
 
-			$k = explode("_",$this->session->data[$db_skey]);
-		
-			$k[0];
-			//$session_skey = $this->session->data[$db_skey] ; 
-			$session_skey = $k[0];
-			$session_sval = $k[1];
-		
-		}
+			// get the secure key from the database
+			$db_skey    =  $this->config->get('secure_key');
 
+			// get the secure value from the database
+			$db_sval    =  $this->config->get('secure_value');
 
-		// Get the session secure value
-		
-		//If( isset($this->session->data[$db_sval]) ) { $session_sval = $this->session->data[$db_sval] ; }
-
- 		if(!empty($getRequestVar)){
-		
-			if(isset($getRequestVar[$db_skey] )){
-				$getlink = array( $db_skey => $getRequestVar[$db_skey] );
-
-		}}
-		
-		// Get the URL params thru get request
-		$url_skey = "" ;
- 		$url_sval = "" ;
-		
-		if(isset($getlink) ){
-			foreach ( $getlink as $key =>$value ){
-				$url_skey =$key;
-				$url_sval = $value; 
-			}
-		}
-		
-				
-		if($db_skey && $db_sval && $url_skey && $url_sval ){
-			
-			if ( $db_skey === $url_skey && $db_sval === $url_sval ) {
-				
-				// if everything is correct , set the session
-				$this->session->data[$db_skey] = $db_skey."_".$db_sval  ;
-				//$this->session->data[$db_sval] = $db_sval  ;
-				$valid = TRUE;	
+			// Get the session securekey
+			$session_skey = "" ;
+			$session_sval = "" ;
+			If( isset($this->session->data[$db_skey]) ) {
+				$k = explode("_",$this->session->data[$db_skey]);
+				$k[0];
+				//$session_skey = $this->session->data[$db_skey] ;
+				$session_skey = $k[0];
+				$session_sval = $k[1];
 			}
 
-		}
+			// Get the session secure value
+			//If( isset($this->session->data[$db_sval]) ) { $session_sval = $this->session->data[$db_sval] ; }
+			if(!empty($getRequestVar)){
+				if(isset($getRequestVar[$db_skey] )){
+					$getlink = array( $db_skey => $getRequestVar[$db_skey] );
+			}}
 
-		if ( $session_skey && $session_sval && $session_skey === $db_skey  && $session_sval === $db_sval ) {
-			 
-				$valid = TRUE;				
-		}
-			
-	
-		
-		if (!$valid ) {
-     	   $loc = 'Location:'.$this->config->get('config_url').'?route=error/not_found';
-		   header($loc);
-			exit;
-		
-		}
+			// Get the URL params thru get request
+			$url_skey = "" ;
+			$url_sval = "" ;
 
+			if(isset($getlink) ){
+				foreach ( $getlink as $key =>$value ){
+					$url_skey = $key;
+					$url_sval = $value;
+				}
+			}
+
+			if($db_skey && $db_sval && $url_skey && $url_sval ){
+				if ( $db_skey === $url_skey && $db_sval === $url_sval ) {
+					// if everything is correct , set the session
+					$this->session->data[$db_skey] = $db_skey."_".$db_sval  ;
+					//$this->session->data[$db_sval] = $db_sval  ;
+					$valid = TRUE;
+				}
+			}
+
+			if ( $session_skey && $session_sval && $session_skey === $db_skey  && $session_sval === $db_sval ) {
+				$valid = TRUE;
+			}
+
+			if (!$valid ) {
+				$loc = 'Location:'.$this->config->get('config_url').'?route=error/not_found';
+				header($loc);
+				exit;
+			}
 		}
-	}	
+	}
 				]]>
-			</add>	
+			</add>
 		</operation>
-<operation error="log">
-			<search position="before" index="1">
-				<![CDATA[if (isset($this->request->get['route'])) {]]>
-			</search>
-			
-			<add>
-	<![CDATA[$this->secureURL($this->request->get);]]>
-</add>
-</operation>	
+		<operation error="log">
+			<search position="before" index="1"><![CDATA[if (isset($this->request->get['route'])) {]]></search>
+			<add><![CDATA[$this->secureURL($this->request->get);]]></add>
+		</operation>
    </file>
 
 	<file name="admin/controller/common/logout.php">
 		<search position="after">
 				<![CDATA[unset($this->session->data['token']);]]>
 			</search>
-			
+
 			<add>
 		<![CDATA[if ( $this->config->get('secure_status') &&  $this->config->get('secure_status') == 1 ) {
 			// get the secure key from the database
@@ -195,7 +141,6 @@
 		}
 ]]>
 </add>
-	
 	</file>
-		
+
 </modification>
