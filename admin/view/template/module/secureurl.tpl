@@ -181,12 +181,20 @@ if (ipaddress != null) {
 <script type="text/javascript">
 $(function(){
 	$('#submit').click(function(){
-		if(confirm("Have you saved the secure url yet?")) {
-   		  $('#form').submit();
-  		}
+		if ($('select').val() == "1") {
+			if(confirm("Have you saved the secure url yet?")) {
+			  $('#form').submit();
+			}
+  		} else {
+		  $('#form').submit();
+		}
 	});
 	$('select').change(function(){
-		$('#warning_msg').show();
+		if ($('select').val() == "1") {
+			$('#warning_msg').show();
+		} else {
+			$('#warning_msg').hide();
+		}
 	});
 });
 
