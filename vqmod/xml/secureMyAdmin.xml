@@ -110,7 +110,11 @@
 			}
 
 			if (!$valid ) {
-				$loc = 'Location:'.$this->config->get('config_url').'?route=error/not_found';
+				if ($this->config->get('config_url') != "") {
+					$loc = 'Location:'.$this->config->get('config_url').'?route=error/not_found';
+				} else {
+					$loc = 'Location:../?route=error/not_found';
+				}
 				header($loc);
 				exit;
 			}
